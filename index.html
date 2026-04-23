@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Certificate Viewer</title>
+    <title>Certificate Verification</title>
     <style>
         body {
             margin: 0;
@@ -27,47 +27,52 @@
         }
 
         .certificate-box img {
-            max-width: 90%;
-            max-height: 80vh;
+            max-width: 95%;
+            max-height: 85vh;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             border-radius: 5px;
             background-color: white;
+            display: none; /* শুরুতে লুকানো থাকবে */
         }
 
         .footer {
-            padding: 30px;
+            padding: 40px;
             text-align: center;
             width: 100%;
         }
 
         .footer a {
             text-decoration: none;
-            color: #0056b3;
+            color: #d1121d; /* Bureau Veritas red theme */
             font-weight: bold;
             font-size: 18px;
-            border: 2px solid #0056b3;
-            padding: 10px 20px;
-            border-radius: 5px;
+            border: 2px solid #d1121d;
+            padding: 12px 24px;
+            border-radius: 4px;
             transition: 0.3s;
         }
 
         .footer a:hover {
-            background-color: #0056b3;
+            background-color: #d1121d;
             color: white;
         }
 
         #error-msg {
-            color: #ff4d4d;
+            color: #333;
             font-weight: bold;
             display: none;
+            text-align: center;
         }
     </style>
 </head>
 <body>
 
     <div class="certificate-box">
-        <img id="certImage" src="" alt="Certificate Display" style="display: none;">
-        <p id="error-msg">সার্টিফিকেট পাওয়া যায়নি! ইউআরএল চেক করুন।</p>
+        <img id="certImage" src="" alt="Certificate Display">
+        <div id="error-msg">
+            <h2>Certificate Not Found</h2>
+            <p>Please check the URL or ID again.</p>
+        </div>
     </div>
 
     <div class="footer">
@@ -75,25 +80,26 @@
     </div>
 
     <script>
-        // ইউআরএল থেকে 'id' প্যারামিটার নেওয়া
         const urlParams = new URLSearchParams(window.location.search);
         const certId = urlParams.get('id');
         const imgElement = document.getElementById('certImage');
         const errorElement = document.getElementById('error-msg');
 
         if (certId) {
-            // আপনার আপলোড করা PNG ফাইলের নাম অনুযায়ী পাথ সেট হবে
-            // মনে করুন ফাইলগুলো index.html এর পাশেই আছে
+            // ফাইলের নাম অনুযায়ী ছবি লোড করবে
             imgElement.src = certId + ".png"; 
-            imgElement.style.display = "block";
             
-            // যদি ছবি না পাওয়া যায়
+            imgElement.onload = function() {
+                imgElement.style.display = "block";
+                errorElement.style.display = "none";
+            };
+
             imgElement.onerror = function() {
-                this.style.display = "none";
+                imgElement.style.display = "none";
                 errorElement.style.display = "block";
             };
         } else {
-            errorElement.textContent = "অনুগ্রহ করে লিংকের শেষে আইডি যুক্ত করুন।";
+            errorElement.innerHTML = "<h2>No ID Provided</h2><p>Please use a valid certificate link.</p>";
             errorElement.style.display = "block";
         }
     </script>

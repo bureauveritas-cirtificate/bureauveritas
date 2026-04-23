@@ -6,16 +6,15 @@
 <title>Verification</title>
 
 <style>
-
 body {
     margin: 0;
     height: 100vh;
     background-size: cover;
     background-position: center;
-    font-family: Arial;
+    font-family: Arial, sans-serif;
 }
 
-/* FOOTER TEXT ONLY */
+/* FOOTER TEXT */
 .footer {
     position: fixed;
     bottom: 20px;
@@ -27,8 +26,8 @@ body {
     text-decoration: none;
     color: black;
     font-weight: bold;
+    font-size: 16px;
 }
-
 </style>
 </head>
 
@@ -46,29 +45,28 @@ body {
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
-// যদি ID না থাকে → close
+// যদি ID না থাকে → redirect
 if (!id) {
-    window.close();
+    window.location.href = "https://group.bureauveritas.com/";
 }
 
-// image path (folder name = images)
-const imgPath = `images/${id}.png`;
+// image path
+const imgPath = "images/" + id + ".png";
 
 // image load check
 const img = new Image();
 
 img.onload = function() {
-    // image থাকলে background set
     document.body.style.background = `url('${imgPath}') no-repeat center center`;
     document.body.style.backgroundSize = "cover";
 };
 
 img.onerror = function() {
-    // image না থাকলে page close
-    window.close();
+    // image না থাকলে redirect
+    window.location.href = "https://group.bureauveritas.com/";
 };
 
-// load trigger
+// trigger
 img.src = imgPath;
 
 </script>

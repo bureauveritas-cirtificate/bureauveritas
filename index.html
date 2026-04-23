@@ -16,7 +16,6 @@
             background-color: #f0f2f5;
             font-family: Arial, sans-serif;
         }
-
         .certificate-box {
             flex-grow: 1;
             display: flex;
@@ -25,25 +24,22 @@
             width: 100%;
             padding: 20px;
         }
-
         .certificate-box img {
             max-width: 95%;
             max-height: 85vh;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             border-radius: 5px;
             background-color: white;
-            display: none; /* শুরুতে লুকানো থাকবে */
+            display: none;
         }
-
         .footer {
             padding: 40px;
             text-align: center;
             width: 100%;
         }
-
         .footer a {
             text-decoration: none;
-            color: #d1121d; /* Bureau Veritas red theme */
+            color: #d1121d;
             font-weight: bold;
             font-size: 18px;
             border: 2px solid #d1121d;
@@ -51,12 +47,10 @@
             border-radius: 4px;
             transition: 0.3s;
         }
-
         .footer a:hover {
             background-color: #d1121d;
             color: white;
         }
-
         #error-msg {
             color: #333;
             font-weight: bold;
@@ -68,7 +62,7 @@
 <body>
 
     <div class="certificate-box">
-        <img id="certImage" src="" alt="Certificate Display">
+        <img id="certImage" src="" alt="Certificate">
         <div id="error-msg">
             <h2>Certificate Not Found</h2>
             <p>Please check the URL or ID again.</p>
@@ -86,7 +80,6 @@
         const errorElement = document.getElementById('error-msg');
 
         if (certId) {
-            // ফাইলের নাম অনুযায়ী ছবি লোড করবে
             imgElement.src = certId + ".png"; 
             
             imgElement.onload = function() {
@@ -99,7 +92,6 @@
                 errorElement.style.display = "block";
             };
         } else {
-            errorElement.innerHTML = "<h2>No ID Provided</h2><p>Please use a valid certificate link.</p>";
             errorElement.style.display = "block";
         }
     </script>
